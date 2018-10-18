@@ -12,6 +12,8 @@ var listyforpoints = [];
 var relatedObj;
 var modeluse;
 var undobool = false;
+var gender = 'NA';
+var age_range = 1;
 
 var historyforpts = {
     listyforpoints: [],
@@ -76,10 +78,14 @@ var historyforpts = {
  		//document.body.appendChild(a);
  		//a.click();
 
+ 		//Generates random user ID (5 digits)
+ 		var userID = Math.floor(Math.random() * 100000);
+ 		//console.log(userID);
+
 		//NEW DOWNLOAD CODE FOR IMAGE
 		var a         = document.createElement('a');
  		a.href        = dataURL;
- 		a.download    =  "demoday.png";
+ 		a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
  		a.click();
 
 
