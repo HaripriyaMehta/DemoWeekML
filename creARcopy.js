@@ -13,6 +13,7 @@ var relatedObj;
 var modeluse;
 var undobool = false;
 var prob_dist = [0.3, 0.5, 0.2];
+var userID = Math.floor(Math.random() * 100000); //Generates random user ID (5 digits)
 
 var historyforpts = {
     listyforpoints: [],
@@ -36,9 +37,9 @@ var historyforpts = {
 		  var image=new Image();
 		  image.onload=function(){
 			drawingContext.drawImage(image, 0, 0, 1250, 750);
-		};
-	image.src = newcan;
-		},
+			};
+		image.src = newcan;
+	},
 	 clearly: function(){
 	 	globalbool = false;
 	 	globaltwice = false;
@@ -48,6 +49,15 @@ var historyforpts = {
 	 },
 	 savepath: function(){
 	    var dataURL = document.getElementById("defaultCanvas0").toDataURL();
+
+	    //var gender = document.getElementById("gender").value;
+ 		//var age_range = document.getElementById("age_range").value;
+		//NEW DOWNLOAD CODE FOR IMAGE
+		//var a         = document.createElement('a');
+ 		//a.href        = document.getElementById("defaultCanvas0").toDataURL();
+ 		//a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
+ 		//a.click();
+
     	var content = "";
 		var pathsJoin = '';
 		  paths.forEach(function(row, index){
@@ -77,16 +87,6 @@ var historyforpts = {
  		//document.body.appendChild(a);
  		//a.click();
 
- 		//Generates random user ID (5 digits)
- 		var userID = Math.floor(Math.random() * 100000);
- 		var gender = document.getElementById("gender").value;
- 		var age_range = document.getElementById("age_range").value;
-
-		//NEW DOWNLOAD CODE FOR IMAGE
-		var a         = document.createElement('a');
- 		a.href        = dataURL;
- 		a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
- 		a.click();
 
  		//GENERATE PROBABILITY DISTRIBUTION - BINOMIAL, n = 2
  		var slider = document.getElementById("slider").value;
@@ -137,7 +137,7 @@ var historyforpts = {
 //     	temp = color;
 //     	color = "rgb(255,255,255)";
 
-    
+
     
 function undo(){
     historyforpts.undo();
@@ -157,6 +157,18 @@ function beginy(){
 function startyd(){
 		historyforpts.startover();
 }
+
+function downloadimage(){
+	var gender = document.getElementById("gender").value;
+ 	var age_range = document.getElementById("age_range").value;
+	 	
+	var a         = document.createElement('a');
+ 	a.href        = document.getElementById("defaultCanvas0").toDataURL();
+ 	a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
+ 	a.click();
+}
+
+
 function selectColor(el){
     for(var i=0;i<document.getElementsByClassName("palette").length;i++){
         document.getElementsByClassName("palette")[i].style.borderColor = "#777";
