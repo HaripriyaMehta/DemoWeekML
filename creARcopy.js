@@ -14,6 +14,8 @@ var modeluse;
 var undobool = false;
 var prob_dist = [0.3, 0.5, 0.2];
 var userID = Math.floor(Math.random() * 100000); //Generates random user ID (5 digits)
+var center_x;
+var center_y;
 
 var historyforpts = {
     listyforpoints: [],
@@ -144,7 +146,7 @@ function undo(){
 }
 
 function cleary(){
-		var truefalse = prompt("Are you sure you want to clear your work? Cannot be undone.", "Yes/No");
+		var truefalse = prompt("Are you sure you want to clear your work? Cannot be undone.", "Yes");
 		if (truefalse == "Yes"){
 		historyforpts.clearly();
 		}
@@ -161,9 +163,60 @@ function startyd(){
 function downloadimage(){
 	var gender = document.getElementById("gender").value;
  	var age_range = document.getElementById("age_range").value;
+
+ 	var defaultCanvas0ctx = document.getElementById("defaultCanvas0").getContext("2d");
+	var defaultCanvas0imagedata = defaultCanvas0ctx.getImageData(0, 0, 2500, 1500);
+
+    //Find the center of userdrawn image
+    var imagedataarray1D = defaultCanvas0imagedata.data;
+ 	//console.log(imagedataarray1D);
+ 	var imagedataarray2D = [];
+    //while(imagedataarray1D.length) imagedataarray2D.push(imagedataarray1D.prototype.slice(0,defaultCanvas0imagedata.width));
+    //console.log(imagedataarray2D);
+    
+    var list_nonzero_x = [];
+    var list_nonzero_y = [];
+    for (var i=0;i<imagedataarray1D.length;i+=4){ //WILL BREAK WITH COLOR
+    	if (imagedataarray1D[i] != 0 & imagedataarray1D[i] != 255){
+    		list_nonzero_x.push((i*0.25)%defaultCanvas0imagedata.width);
+    		list_nonzero_y.push(Math.floor((i*0.25)/defaultCanvas0imagedata.width));
+    	}
+    }
+
+    center_x = list_nonzero_x.reduce((a,b) => a+b, 0)/list_nonzero_x.length;
+    center_y = list_nonzero_y.reduce((a,b) => a+b, 0)/list_nonzero_y.length;;
+    //console.log(center_x);
+    //console.log(center_y);
+
+
+ 	//Checks that crop is within range
+ 	var crop_top = Math.floor(center_y) - 256;
+ 	if (crop_top < 0){ 
+ 		crop_top = 0;
+ 	} else if (crop_top > (1500 - 256)){
+ 		crop_top = 1500-256;	
+ 	}
+ 	var crop_left = Math.floor(center_x) - 256;
+ 	if (crop_left < 0){ 
+ 		crop_left = 0;
+ 	} else if (crop_left > (2500 - 256)){
+ 		crop_left = 2500-256;
+ 	}
+
+ 	defaultCanvas0imagedata = defaultCanvas0ctx.getImageData(crop_left, crop_top, 512, 512);
+
+ 	//Makes the cropped canvas
+ 	var crop_canvas = document.createElement("canvas");
+ 	crop_canvas.width = 512;
+ 	crop_canvas.height = 512;
+
+ 	//Redraws image to the cropped 512x512 canvas
+ 	var crop_ctx = crop_canvas.getContext("2d");
+    crop_ctx.putImageData(defaultCanvas0imagedata, 0, 0);
 	 	
 	var a         = document.createElement('a');
- 	a.href        = document.getElementById("defaultCanvas0").toDataURL();
+ 	//a.href        = document.getElementById("crop_canvas").toDataURL();
+ 	a.href        = crop_canvas.toDataURL();
  	a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
  	a.click();
 }
