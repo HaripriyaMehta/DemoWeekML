@@ -179,23 +179,17 @@ function downloadimage(){
     		list_nonzero_y.push(Math.floor((i*0.25)/defaultCanvas0imagedata.width));
     	}
     }
+
     var min_x = Math.min.apply(Math,list_nonzero_x);
     var max_x = Math.max.apply(Math,list_nonzero_x);
     var min_y = Math.min.apply(Math,list_nonzero_y);
     var max_y = Math.max.apply(Math,list_nonzero_y);
-
     var range_x = max_x - min_x;
     var range_y = max_y - min_y;
-
     var ratio_x = range_x / 512;
     var ratio_y = range_y / 512;
 
     var scale_ratio = Math.max(ratio_x, ratio_y) * 1.2;
-
-    console.log(scale_ratio);
-
-    //center_x = (list_nonzero_x.reduce((a,b) => a+b, 0)/list_nonzero_x.length);
-    //center_y = (list_nonzero_y.reduce((a,b) => a+b, 0)/list_nonzero_y.length);
     center_x = 0.5*(max_x + min_x);
     center_y = 0.5*(max_y + min_y);
 
@@ -212,10 +206,7 @@ function downloadimage(){
  	} else if (crop_left > (2500 - 256*scale_ratio)){
  		crop_left = 2500-256*scale_ratio;
  	}
- 	console.log(crop_left);
-    console.log(crop_top);
-    console.log(Math.ceil(512*scale_ratio));
-
+ 	
  	//Makes the cropped canvas
  	var crop_canvas = document.createElement("canvas");
  	crop_canvas.width = 512;
@@ -223,27 +214,50 @@ function downloadimage(){
 
  	//Redraws image to the cropped 512x512 canvas
  	var crop_ctx = crop_canvas.getContext("2d");
+ 	crop_ctx.fillStyle = 'white';
+ 	crop_ctx.fillRect(0, 0, 512, 512);
 
- 	//defaultCanvas0imagedata = defaultCanvas0ctx.getImageData(crop_left, crop_top, 512*scale_ratio, 512*scale_ratio);
- 	//var defaultimageobject = document.createElement("img");
  	var defaultimageobject = new Image();
  	defaultimageobject.src = document.getElementById("defaultCanvas0").toDataURL("image/png");
  	//document.body.appendChild(defaultimageobject);
- 	console.log(defaultimageobject);
-    //crop_ctx.scale(1/scale_ratio, 1/scale_ratio);
-    //crop_ctx.putImageData(defaultCanvas0imagedata, 0, 0, 0, 0, 512, 512);
-    //crop_ctx.drawImage(defaultimageobject, 0, 0, 512, 512);
     defaultimageobject.onload = function(){
     	//crop_ctx.drawImage(defaultimageobject, 0, 0, 800, 800, 0, 0, 512, 512);
-    	crop_ctx.drawImage(defaultimageobject, crop_left, crop_top, Math.ceil(512*scale_ratio), Math.ceil(512*scale_ratio), 0, 0, 512, 512);
+    	var original_x = crop_left;
+    	var original_y = crop_top;
+    	var new_x = 0;
+    	var new_y = 0;
+
+    	//Resolve border issue on the top and left
+    	if (crop_left <= 2){ //WILL CAUSE MINOR ISSUES WITH RESCALE BACK TO ORIGINAL IMAGE
+    		original_x = 2;
+    	}
+    	if (crop_top <= 2){ //WILL CAUSE MINOR ISSUES WITH RESCALE BACK TO ORIGINAL IMAGE
+    		original_y = 2;
+    	}
+
+    	var original_width = Math.ceil(512*scale_ratio);
+    	var original_height = Math.ceil(512*scale_ratio);
+
+    	var new_width = 512;
+    	var new_height = 512;
+
+    	//Hopefully resolves border issue on the bottom and right
+    	if (crop_left + original_width > 2500){
+    		new_width = (2500 - crop_left - 4)/original_width * 512;
+    		original_width = 2500 - crop_left - 4;
+    	}
+    	if (crop_top + original_height > 1500){
+    		new_height = (1500 - crop_top - 4)/original_height * 512;
+    		original_height = 1500 - crop_top - 4;
+    	}
+
+    	crop_ctx.drawImage(defaultimageobject, original_x, original_y, original_width, original_height, new_x, new_y, new_width, new_height);
+    	//console.log(crop_ctx.getImageData(0, 0, 512, 512).data);
     	var a         = document.createElement('a');
- 		//a.href        = document.getElementById("crop_canvas").toDataURL();
  		a.href        = crop_canvas.toDataURL();
  		a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
  		a.click();
-    }
-
-	
+    }	
 }
 
 
