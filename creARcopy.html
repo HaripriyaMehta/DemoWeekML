@@ -5,6 +5,7 @@
 		<title>Paint</title>
 		<link rel="stylesheet" type="text/css" href="creARstyle.css">
 	    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+	    <script type="text/javascript" src="canvasStack1v06.js"></script>
 		<script type="text/javascript" src="creARcopy.js"></script>
 		<script type="text/javascript" src="tensorcalc.js"></script>
 		<script type="text/javascript" src="sketches_data.js"></script>
@@ -31,6 +32,7 @@
     <body>
     	<div id="toolbar">
     	</div>
+
         <div id="container">
         	<div class="palette-case">
 				<div class="palette black" onmousedown="selectColor(this)" style="background-color: #FFFFFF; border-style: solid;"></div>
@@ -52,7 +54,8 @@
            	<div id="controllers">
   				<span class="controller" onclick="undo()" id="undo">Undo</span>  
   				<span class="controller" onclick="cleary()" id="clear">Clear</span>  
-  				<span class="controller" onclick="beginy()" id="save">Begin Neural Network Mode</span>  
+  				<span class="controller" onclick="beginy()" id="save">Begin Neural Network Mode</span>
+  				<span class="controller" onclick="changelayer()" id="down">New Object</span>    
   				<span class="controller" onclick="downloadimage()" id="down">Download Current Image</span>
   				<span class="controller" onclick="colorimage()" id="down">Color Image</span>    
 			<!-- <span class="controller" onclick="startyd()" id="save">Start New Drawing</span> -->  
@@ -83,8 +86,9 @@
   				<input type="range" class="slider" min="0" max="100" value="50" id="slider">
 			</div>
 
-    	</div>
+			</div id="canvascontainer">
             </canvas>
-        </div>
+        	</div>
+    	
     </body>
 </html>
