@@ -45,9 +45,11 @@
 				<div class="palette darkblue" onmousedown="selectColor(this)" style="background-color: #333333; border-style: solid;"></div>
 				<div class="palette purple" onmousedown="selectColor(this)" style="background-color: #1a1a1a; border-style: solid;"></div>
 				<div class="palette brown" onmousedown="selectColor(this)" style="background-color: #000000; border-style: solid;"></div>
+				
     		</div>
 
     		<div class="slidecontainer">
+    			<b> Line Thickness </b>
   				<input type="range" class="slider" min="1" max="20" value="10" id="thickness">
 			</div>
 
@@ -55,9 +57,9 @@
   				<span class="controller" onclick="undo()" id="undo">Undo</span>  
   				<span class="controller" onclick="cleary()" id="clear">Clear</span>  
   				<span class="controller" onclick="beginy()" id="save">Begin Neural Network Mode</span>
-  				<span class="controller" onclick="changelayer()" id="down">New Object</span>    
+  				<span class="controller" onclick="changelayer()" id="changelayer">New Object</span>    
   				<span class="controller" onclick="downloadimage()" id="down">Download Current Image</span>
-  				<span class="controller" onclick="colorimage()" id="down">Color Image</span>    
+  				<span class="controller" onclick="colorimage()" id="colorimage">Color Image</span>    
 			<!-- <span class="controller" onclick="startyd()" id="save">Start New Drawing</span> -->  
 			</div>
 
@@ -83,6 +85,7 @@
 			</div>
 
 			<div class="slidecontainer">
+				<b>Randomness Distribution</b>
   				<input type="range" class="slider" min="0" max="100" value="50" id="slider">
 			</div>
 

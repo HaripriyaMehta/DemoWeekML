@@ -43,12 +43,14 @@
   padding: 5px;
 }
 
-#viewport {
+.toolbar {
   position: relative;
 }
 
-#viewport canvas {
+.toolbar > canvas{
   position: absolute;
+  left: 0;
+  top: 0;
 }
 
 canvas {
