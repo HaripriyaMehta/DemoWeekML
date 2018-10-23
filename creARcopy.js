@@ -251,7 +251,6 @@ function downloadimage(){
  	crop_ctx.fillRect(0, 0, 512, 512);
 
  	var defaultimageobject = new Image();
- 	defaultimageobject.src = document.getElementById("defaultCanvas0").toDataURL("image/png");
  	//document.body.appendChild(defaultimageobject);
     defaultimageobject.onload = function(){
     	//crop_ctx.drawImage(defaultimageobject, 0, 0, 800, 800, 0, 0, 512, 512);
@@ -292,7 +291,8 @@ function downloadimage(){
  		//a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
  		a.download    =  "color3.png";
  		a.click();
-    }	
+    }
+ 	defaultimageobject.src = document.getElementById("defaultCanvas0").toDataURL("image/png");	
 }
 
 //NOTE SECURITY ISSUES: https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
@@ -329,6 +329,7 @@ function colorimage(){
 }
 
 //https://www.arc.id.au/CanvasLayers.html
+//for later notice: fabric.js or concrete.js?
 function changelayer(){
 	number_of_objects += 1;
 	document.getElementById("changelayer").innerHTML = "New Object: " + number_of_objects;
@@ -449,6 +450,7 @@ function touchMoved() {
         
 function touchEnded() {
 	historyforpts.saveState();
+	downloadimage(); //AUTODOWNLOAD ON END OF STROKE
     return false;
 }
 
@@ -479,6 +481,9 @@ var encode_strokes = function() {
 };
 // 
 var draw = function() {
+if (cvsStk === undefined){
+	changelayer();
+}
 if (globaltwice == false){
   if (ptouchIsDown && touchIsDown){
   	var thickness = document.getElementById("thickness").value;
