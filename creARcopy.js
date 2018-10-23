@@ -481,16 +481,18 @@ var encode_strokes = function() {
 var draw = function() {
 if (globaltwice == false){
   if (ptouchIsDown && touchIsDown){
+  	var thickness = document.getElementById("thickness").value;
     drawingContext.strokeStyle = color;
     paths.push([(touchX-8)/1250, (touchY-8)/750]);
-    strokeWeight(2).strokeCap(ROUND);
+    strokeWeight(thickness).strokeCap(ROUND);
     line(touchX, touchY, ptouchX, ptouchY);
   }
   if (pmouseIsPressed && mouseIsPressed){
   	//console.log(drawingContext);
+  	var thickness = document.getElementById("thickness").value;
     drawingContext.strokeStyle = color;
     paths.push([(mouseX-8)/1250, (mouseY-8)/750]);
-    strokeWeight(2).strokeCap(ROUND);
+    strokeWeight(thickness).strokeCap(ROUND);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
   ptouchIsDown = touchIsDown;
