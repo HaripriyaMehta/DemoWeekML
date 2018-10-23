@@ -160,6 +160,8 @@ function cleary(){
 		var truefalse = prompt("Are you sure you want to clear your work? Cannot be undone.", "Yes");
 		if (truefalse == "Yes"){
 		historyforpts.clearly();
+		cvsStk.deleteAllLayers();
+		cvsStk = undefined;
 		}
 }
 
