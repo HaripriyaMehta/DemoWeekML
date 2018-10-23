@@ -289,8 +289,8 @@ function downloadimage(){
     	//console.log(crop_ctx.getImageData(0, 0, 512, 512).data);
     	var a         = document.createElement('a');
  		a.href        = crop_canvas.toDataURL();
- 		a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
- 		//a.download    =  "color3.png";
+ 		//a.download    =  userID + "-" + gender + "-" + age_range + ".jpg";
+ 		a.download    =  "color3.png";
  		a.click();
     }	
 }
@@ -318,10 +318,6 @@ function colorimage(){
  			var defaultctx = document.getElementById(drawing_layer_ID).getContext("2d");
  			defaultctx.clearRect(2, 2, document.getElementById(drawing_layer_ID).width-4, document.getElementById(drawing_layer_ID).height-4);
  			defaultctx.drawImage(transparentimageobject, original_x/2, original_y/2, Math.ceil(scale_ratio*512/2), Math.ceil(scale_ratio*512/2));
- 		var a         = document.createElement('a');
- 		a.href        = document.getElementById(drawing_layer_ID).toDataURL();
- 		a.download    =  "color3.png";
- 		a.click();
  		}
  		transparentimageobject.src = transparentDataURL;
  	
