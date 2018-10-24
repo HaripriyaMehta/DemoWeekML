@@ -159,9 +159,12 @@ function undo(){
 function cleary(){
 		var truefalse = prompt("Are you sure you want to clear your work? Cannot be undone.", "Yes");
 		if (truefalse == "Yes"){
-		historyforpts.clearly();
-		cvsStk.deleteAllLayers();
-		cvsStk = undefined;
+			cvsStk.deleteAllLayers();
+			document.getElementById("toolbar").innerHTML = "";
+			cvsStk = undefined;
+			document.getElementById("changelayer").innerHTML = "New Object";
+			number_of_objects = 0;
+			historyforpts.clearly();
 		}
 }
 
