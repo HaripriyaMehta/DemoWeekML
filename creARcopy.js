@@ -320,6 +320,9 @@ function colorimage(){
  			var defaultctx = document.getElementById(drawing_layer_ID).getContext("2d");
  			defaultctx.clearRect(2, 2, document.getElementById(drawing_layer_ID).width-4, document.getElementById(drawing_layer_ID).height-4);
  			defaultctx.drawImage(transparentimageobject, original_x/2, original_y/2, Math.ceil(scale_ratio*512/2), Math.ceil(scale_ratio*512/2));
+ 			//IF ON TOUCHSCREEN, COMMENT OUT LINE ABOVE AND REPLACE WITH LINE BELOW
+ 			//defaultctx.drawImage(transparentimageobject, original_x, original_y, Math.ceil(scale_ratio*512), Math.ceil(scale_ratio*512));
+ 			
  		}
  		transparentimageobject.src = transparentDataURL;
  	
@@ -343,25 +346,19 @@ function changelayer(){
 	//defaultCanvas0ctx.rect(0,0, 1249,749);
 	drawing_layer_ID = cvsStk.createLayer();
 	current_layer_ID = cvsStk.createLayer();
-	//var div = document.getElementById("toolbar");
-
-	//var drawing_canvas = document.createElement("canvas");
-	//drawing_canvas.width = 2500;
-	//drawing_canvas.height = 1500;
-	//drawing_canvas.id = "drawing_canvas" + number_of_objects;
-	//drawing_layer_ID = "drawing_canvas" + number_of_objects;
-	//drawing_canvas.style.cssText = "width: 1250px; height: 750px; position:absolute; left:0; top:0";
-
-	//var current_canvas = document.createElement("canvas");
-	//current_canvas.width = 2500;
-	//current_canvas.height = 1500;
-	//current_canvas.id = "current_canvas" + number_of_objects;
-	//current_layer_ID = "current_canvas" + number_of_objects;
-	//current_canvas.style.cssText = "width: 1250px; height: 750px; position:absolute; left:0; top:0";
-
-	//div.appendChild(drawing_canvas);
-	//div.appendChild(current_canvas);
 }
+
+function drawdinosaur(){
+	var dinosaurimageobject = new Image(512, 512);
+	dinosaurimageobject.onload = function(){
+ 		var defaultctx = document.getElementById("defaultCanvas0").getContext("2d");
+ 		defaultctx.drawImage(dinosaurimageobject, 250, 250, 256, 256);
+ 		downloadimage();
+ 	}
+ 	dinosaurimageobject.src = "dinosaur.png";
+}
+
+
 
 function image2imageData(image){
 	var c = document.createElement("canvas");
